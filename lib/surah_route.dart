@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quran_com_clone/surah_data.dart';
 
+import 'surah_data.dart';
 import 'ayah_box.dart';
 
 class SurahPage extends StatelessWidget {

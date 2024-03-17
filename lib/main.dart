@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quran_com_clone/surah_route.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'notifiers.dart';
-
 import 'surah_box.dart';
-import 'package:quran_com_clone/settings_page/settings_page.dart';
+import 'surah_route.dart';
+import 'utils.dart';
+import 'notifiers.dart';
+import 'settings_page/settings_page.dart';
 
 void main() async {
   SharedPreferences.setPrefix('taaaf11_quran_com_clone');
@@ -89,15 +89,24 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              width: 300,
+              width: 230,
               child: TextField(
                 controller: _textEditingController,
-                onSubmitted: (value) {
+                decoration: InputDecoration(hintText: 'Surah:Ayah'),
+                textAlign: TextAlign.center,
+                onSubmitted: (value) async {
                   var surah = int.parse(value.split(':')[0]);
+
+                  // check if it's a valid surah
+                  surah = (validateSurah(surah)) ? surah : 114;
+
                   var startAyah = int.parse(value.split(':')[1]);
+
+                  // check if it's a valid ayat of the given surah
+                  // if not, give the last ayah of the surah
+                  startAyah = (validateAyah(surah, startAyah)) ? 1 : startAyah;
 
                   Navigator.push(
                     context,
@@ -114,10 +123,10 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(height: 50),
             Expanded(
               child: SizedBox(
-                width: 314,
+                width: 348,
                 child: ListView.separated(
                   itemBuilder: (_, index) => Container(
-                    padding: EdgeInsets.all(5),
+                    padding: EdgeInsets.all(18),
                     decoration: BoxDecoration(
                       border: Border.all(
                           color: Theme.of(context).colorScheme.primary),
