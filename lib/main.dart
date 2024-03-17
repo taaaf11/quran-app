@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:quran_com_clone/surah_route.dart';
 
 import 'surah_btn.dart';
-import 'surah_data.dart';
 
 void main() {
   runApp(const MyApp());
@@ -74,8 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => SurahPage(
-                      surah: surah,
-                      surahName: surahData[surah]![1],
+                      surahNumber: surah,
                       startAyah: startAyah,
                     ),
                   ),
@@ -87,15 +85,13 @@ class _MyHomePageState extends State<MyHomePage> {
           Expanded(
             child: ListView.separated(
               itemBuilder: (_, index) => SurahButton(
-                number: index + 1,
-                name: surahData[index + 1]![1],
+                surahNumber: index + 1,
                 onPress: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => SurahPage(
-                        surah: index + 1,
-                        surahName: surahData[index + 1]![1],
+                        surahNumber: index + 1,
                         startAyah: 1,
                       ),
                     ),

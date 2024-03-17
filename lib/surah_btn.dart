@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import 'surah_data.dart';
+
 class SurahButton extends StatelessWidget {
-  final int number;
-  final String name;
+  final int surahNumber;
   final Function onPress;
 
   const SurahButton(
-      {super.key,
-      required this.number,
-      required this.name,
-      required this.onPress});
+      {super.key, required this.surahNumber, required this.onPress});
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +18,21 @@ class SurahButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            NumberBox(number: number),
+            NumberBox(number: surahNumber),
             SizedBox(width: 30),
             SizedBox(
-              width: 150,
-              child: Text(
-                name,
-                style: TextStyle(fontSize: 20),
+              child: Column(
+                children: [
+                  Text(
+                    surahData[surahNumber]![1], // surah name
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    surahData[surahNumber]![
+                        2], // surah name translated into English
+                    style: TextStyle(color: Colors.grey),
+                  )
+                ],
               ),
             ),
           ],
