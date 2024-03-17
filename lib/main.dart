@@ -21,13 +21,13 @@ void main() async {
     ChangeNotifierProvider(
       create: (context) =>
           FontSizesProvider(arabicFontSize, translationFontSize),
-      child: MyApp(),
+      child: QuranApp(),
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class QuranApp extends StatelessWidget {
+  const QuranApp({super.key});
 
   // This widget is the root of your application.
   @override
@@ -42,21 +42,21 @@ class MyApp extends StatelessWidget {
         fontFamily: 'Comfortaa',
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Quran App'),
+      home: const HomePage(title: 'Quran App'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _HomePageState extends State<HomePage> {
   late TextEditingController _textEditingController;
 
   @override

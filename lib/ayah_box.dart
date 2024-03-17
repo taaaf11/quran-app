@@ -44,33 +44,34 @@ class AyahBox extends StatelessWidget {
               children: [
                 Flexible(flex: 2, child: Text('$surah:$ayah')),
                 Flexible(
-                    flex: 8,
-                    child: FutureBuilder(
-                      future: _fetchAyahText(),
-                      builder: (context, snapshot) {
-                        switch (snapshot.connectionState) {
-                          case ConnectionState.waiting:
-                            return Text('Loading');
-                          default:
-                            if (snapshot.hasError) {
-                              return Text(snapshot.error.toString());
-                            } else {
-                              return SizedBox(
-                                child: Text(
-                                  snapshot.data!['code_v1'],
-                                  style: TextStyle(
-                                    fontFamily:
-                                        '${snapshot.data!['v1_page']}.TTF',
-                                    fontSize: fontsState.arabicFontSize,
-                                  ),
-                                  textDirection: TextDirection.rtl,
-                                  softWrap: true,
+                  flex: 8,
+                  child: FutureBuilder(
+                    future: _fetchAyahText(),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Text('Loading');
+                        default:
+                          if (snapshot.hasError) {
+                            return Text(snapshot.error.toString());
+                          } else {
+                            return SizedBox(
+                              child: Text(
+                                snapshot.data!['code_v1'],
+                                style: TextStyle(
+                                  fontFamily:
+                                      '${snapshot.data!['v1_page']}.TTF',
+                                  fontSize: fontsState.arabicFontSize,
                                 ),
-                              );
-                            }
-                        }
-                      },
-                    )),
+                                textDirection: TextDirection.rtl,
+                                softWrap: true,
+                              ),
+                            );
+                          }
+                      }
+                    },
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 30),
