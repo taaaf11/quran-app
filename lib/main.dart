@@ -59,51 +59,58 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: Column(
-        children: <Widget>[
-          SizedBox(
-            width: 200,
-            child: TextField(
-              controller: _textEditingController,
-              onSubmitted: (value) {
-                var surah = int.parse(value.split(':')[0]);
-                var startAyah = int.parse(value.split(':')[1]);
+      body: Center(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              width: 300,
+              child: TextField(
+                controller: _textEditingController,
+                onSubmitted: (value) {
+                  var surah = int.parse(value.split(':')[0]);
+                  var startAyah = int.parse(value.split(':')[1]);
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SurahPage(
-                      surahNumber: surah,
-                      startAyah: startAyah,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          SizedBox(height: 50),
-          Expanded(
-            child: ListView.separated(
-              itemBuilder: (_, index) => SurahButton(
-                surahNumber: index + 1,
-                onPress: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => SurahPage(
-                        surahNumber: index + 1,
-                        startAyah: 1,
+                        surahNumber: surah,
+                        startAyah: startAyah,
                       ),
                     ),
                   );
                 },
               ),
-              itemCount: 114,
-              separatorBuilder: (context, index) => const SizedBox(height: 20),
-              addAutomaticKeepAlives: false,
             ),
-          ),
-        ],
+            SizedBox(height: 50),
+            Expanded(
+              child: SizedBox(
+                width: 300,
+                child: ListView.separated(
+                  itemBuilder: (_, index) => SurahButton(
+                    surahNumber: index + 1,
+                    onPress: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SurahPage(
+                            surahNumber: index + 1,
+                            startAyah: 1,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  itemCount: 114,
+                  separatorBuilder: (context, index) =>
+                      const SizedBox(height: 20),
+                  addAutomaticKeepAlives: false,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
