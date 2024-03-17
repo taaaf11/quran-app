@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
       title: 'Quran.com Clone App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xff16666f), brightness: Brightness.dark),
+          seedColor: const Color(0xff16666f),
+          brightness: Brightness.dark,
+        ),
+        fontFamily: 'Comfortaa',
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Quran App'),
@@ -38,16 +41,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    // var screenWidth = MediaQuery.of(context).size.width;
-    // var screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
             child: ListView.separated(

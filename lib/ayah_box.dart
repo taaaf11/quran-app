@@ -29,54 +29,78 @@ class AyahBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return
     return Card(
       surfaceTintColor: Theme.of(context).colorScheme.onSurface,
-      child: Column(
-        children: [
-          FutureBuilder(
-            future: _fetchAyahText(),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return Text('Loading');
-                default:
-                  if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
-                  } else {
-                    return Text(
-                      snapshot.data!['code_v1'],
-                      style: TextStyle(
-                        fontFamily: '${snapshot.data!['v1_page']}.TTF',
-                        fontSize: 40,
-                      ),
-                      textDirection: TextDirection.rtl,
-                    );
-                  }
-              }
-            },
-          ),
-          FutureBuilder(
-            future: _fetchAyahTranslation(),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
-                  return Text('Loading');
-                default:
-                  if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
-                  } else {
-                    return Text(
-                      removeMarkupTags(snapshot.data!),
-                      style: TextStyle(
-                        fontSize: 25,
-                      ),
-                    );
-                  }
-              }
-            },
-          ),
-        ],
+      child: Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('$surah:$ayah'),
+                FutureBuilder(
+                  future: _fetchAyahText(),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Text('Loading');
+                      default:
+                        if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        } else {
+                          return SizedBox(
+                            width: MediaQuery.of(context).size.width - 200,
+                            child: Text(
+                              snapshot.data!['code_v1'],
+                              style: TextStyle(
+                                fontFamily: '${snapshot.data!['v1_page']}.TTF',
+                                fontSize: 40,
+                              ),
+                              textDirection: TextDirection.rtl,
+                              softWrap: true,
+                            ),
+                          );
+                        }
+                    }
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                FutureBuilder(
+                  future: _fetchAyahTranslation(),
+                  builder: (context, snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Text('Loading');
+                      default:
+                        if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        } else {
+                          return SizedBox(
+                            width: MediaQuery.of(context).size.width - 200,
+                            child: Text(
+                              removeMarkupTags(snapshot.data!),
+                              style: TextStyle(
+                                fontSize: 25,
+                              ),
+                              textAlign: TextAlign.left,
+                              softWrap: true,
+                            ),
+                          );
+                        }
+                    }
+                  },
+                ),
+              ],
+            ),
+          ],
+          // ),)
+        ),
       ),
     );
   }

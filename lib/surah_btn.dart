@@ -14,23 +14,18 @@ class SurahButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: Container(
-        // width: 100,
-        // decoration: BoxDecoration(border: Border.all(color: Colors.pink)),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            NumberBox(number: number),
-            SizedBox(width: 10),
-            Text(
-              name,
-              style: TextStyle(fontSize: 20),
-            ),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          NumberBox(number: number),
+          SizedBox(width: 10),
+          Text(
+            name,
+            style: TextStyle(fontSize: 20),
+          ),
+        ],
       ),
       onTap: () => onPress(),
-      // onFocusChange: ,
     );
   }
 }

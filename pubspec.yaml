@@ -27,6 +27,10 @@ flutter:
   uses-material-design: true
 
   fonts:
+    - family: Comfortaa
+      fonts:
+        - asset: assets/fonts/Comfortaa-Regular.ttf
+ 
     - family: 1.TTF
       fonts:
         - asset: assets/fonts/QCF_P001.TTF
