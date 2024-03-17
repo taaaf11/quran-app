@@ -9,22 +9,22 @@ class FontSizesProvider with ChangeNotifier {
     _translationFontSize = translationFontSize;
   }
 
-  void increaseArabicFontSize() {
+  void incArabicFontSize() {
     _arabicFontSize += 1;
     notifyListeners();
   }
 
-  void increaseTranslationFontSize() {
+  void incTranslationFontSize() {
     _translationFontSize += 1;
     notifyListeners();
   }
 
-  void decreaseArabicFontSize() {
+  void decArabicFontSize() {
     _arabicFontSize -= 1;
     notifyListeners();
   }
 
-  void decreaseTranslationFontSize() {
+  void decTranslationFontSize() {
     _translationFontSize -= 1;
     notifyListeners();
   }

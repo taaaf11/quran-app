@@ -43,7 +43,7 @@ class _TranslationFontSizeSettingState
               onPressed: () {
                 setState(
                   () {
-                    fontsState.decreaseTranslationFontSize();
+                    fontsState.decTranslationFontSize();
                     prefs.setDouble(
                         'translationFontSize', fontsState.translationFontSize);
                   },
@@ -59,7 +59,7 @@ class _TranslationFontSizeSettingState
               onPressed: () {
                 setState(
                   () {
-                    fontsState.increaseTranslationFontSize();
+                    fontsState.incTranslationFontSize();
                     prefs.setDouble(
                         'translationFontSize', fontsState.translationFontSize);
                   },

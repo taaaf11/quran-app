@@ -41,7 +41,7 @@ class _AyahFontSizeSettingState extends State<AyahFontSizeSetting> {
               onPressed: () {
                 setState(
                   () {
-                    fontsState.decreaseArabicFontSize();
+                    fontsState.decArabicFontSize();
                     prefs.setDouble(
                         'arabicFontSize', fontsState.arabicFontSize);
                   },
@@ -57,7 +57,7 @@ class _AyahFontSizeSettingState extends State<AyahFontSizeSetting> {
               onPressed: () {
                 setState(
                   () {
-                    fontsState.increaseArabicFontSize();
+                    fontsState.incArabicFontSize();
                     prefs.setDouble(
                         'arabicFontSize', fontsState.arabicFontSize);
                   },
