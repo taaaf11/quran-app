@@ -5,12 +5,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'notifiers.dart';
 
-import 'surah_btn.dart';
+import 'surah_box.dart';
 import 'package:quran_com_clone/settings_page/settings_page.dart';
 
 void main() async {
   SharedPreferences.setPrefix('taaaf11_quran_com_clone');
 
+  WidgetsFlutterBinding.ensureInitialized();
   var prefs = await SharedPreferences.getInstance();
 
   double arabicFontSize = prefs.getDouble('arabicFontSize') ?? 25;
@@ -35,8 +36,8 @@ class MyApp extends StatelessWidget {
       title: 'Quran.com Clone App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xff16666f),
-          brightness: Brightness.light,
+          seedColor: const Color(0xff2ca4ab),
+          brightness: Brightness.dark,
         ),
         fontFamily: 'Comfortaa',
         useMaterial3: true,
@@ -113,21 +114,31 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(height: 50),
             Expanded(
               child: SizedBox(
-                width: 300,
+                width: 314,
                 child: ListView.separated(
-                  itemBuilder: (_, index) => SurahButton(
-                    surahNumber: index + 1,
-                    onPress: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SurahPage(
-                            surahNumber: index + 1,
-                            startAyah: 1,
+                  itemBuilder: (_, index) => Container(
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: Theme.of(context).colorScheme.primary),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: InkWell(
+                      child: SurahNameBox(
+                        surahNumber: index + 1,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SurahPage(
+                              surahNumber: index + 1,
+                              startAyah: 1,
+                            ),
                           ),
-                        ),
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                   itemCount: 114,
                   separatorBuilder: (context, index) =>

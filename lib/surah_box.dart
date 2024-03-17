@@ -2,39 +2,34 @@ import 'package:flutter/material.dart';
 
 import 'surah_data.dart';
 
-class SurahButton extends StatelessWidget {
+class SurahNameBox extends StatelessWidget {
   final int surahNumber;
-  final Function onPress;
 
-  const SurahButton(
-      {super.key, required this.surahNumber, required this.onPress});
+  const SurahNameBox({super.key, required this.surahNumber});
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      child: Row(
-        children: [
-          NumberBox(number: surahNumber),
-          SizedBox(width: 30),
-          SizedBox(
-            width: 190,
-            child: Column(
-              children: [
-                Text(
-                  surahData[surahNumber]![1], // surah name
-                  style: TextStyle(fontSize: 20),
-                ),
-                Text(
-                  surahData[surahNumber]![
-                      2], // surah name translated into English
-                  style: TextStyle(color: Colors.grey),
-                )
-              ],
-            ),
+    return Row(
+      children: [
+        NumberBox(number: surahNumber),
+        SizedBox(width: 30),
+        SizedBox(
+          width: 190,
+          child: Column(
+            children: [
+              Text(
+                surahData[surahNumber]![1], // surah name
+                style: TextStyle(fontSize: 20),
+              ),
+              Text(
+                surahData[surahNumber]![
+                    2], // surah name translated into English
+                style: TextStyle(color: Colors.grey),
+              )
+            ],
           ),
-        ],
-      ),
-      onTap: () => onPress(),
+        ),
+      ],
     );
   }
 }
