@@ -1,10 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quran_com_clone/surah_route.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'notifiers.dart';
 
 import 'surah_btn.dart';
+import 'package:quran_com_clone/settings_page/settings_page.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  SharedPreferences.setPrefix('taaaf11_quran_com_clone');
+
+  var prefs = await SharedPreferences.getInstance();
+
+  double arabicFontSize = prefs.getDouble('arabicFontSize') ?? 25;
+  double translationFontSize = prefs.getDouble('translationFontSize') ?? 17;
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) =>
+          FontSizesProvider(arabicFontSize, translationFontSize),
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xff16666f),
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
         ),
         fontFamily: 'Comfortaa',
         useMaterial3: true,
@@ -58,6 +76,15 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SettingsPage()));
+            },
+            icon: Icon(Icons.settings),
+          )
+        ],
       ),
       body: Center(
         child: Column(

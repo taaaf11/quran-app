@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:provider/provider.dart';
+import 'notifiers.dart';
 import 'utils.dart';
 
 class AyahBox extends StatelessWidget {
@@ -29,6 +31,8 @@ class AyahBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var fontsState = Provider.of<FontSizesProvider>(context);
+
     return Card(
       surfaceTintColor: Theme.of(context).colorScheme.onSurface,
       child: Container(
@@ -38,68 +42,71 @@ class AyahBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('$surah:$ayah'),
-                FutureBuilder(
-                  future: _fetchAyahText(),
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Text('Loading');
-                      default:
-                        if (snapshot.hasError) {
-                          return Text(snapshot.error.toString());
-                        } else {
-                          return SizedBox(
-                            width: MediaQuery.of(context).size.width - 200,
-                            child: Text(
-                              snapshot.data!['code_v1'],
-                              style: TextStyle(
-                                fontFamily: '${snapshot.data!['v1_page']}.TTF',
-                                fontSize: 40,
-                              ),
-                              textDirection: TextDirection.rtl,
-                              softWrap: true,
-                            ),
-                          );
+                Flexible(flex: 2, child: Text('$surah:$ayah')),
+                Flexible(
+                    flex: 8,
+                    child: FutureBuilder(
+                      future: _fetchAyahText(),
+                      builder: (context, snapshot) {
+                        switch (snapshot.connectionState) {
+                          case ConnectionState.waiting:
+                            return Text('Loading');
+                          default:
+                            if (snapshot.hasError) {
+                              return Text(snapshot.error.toString());
+                            } else {
+                              return SizedBox(
+                                child: Text(
+                                  snapshot.data!['code_v1'],
+                                  style: TextStyle(
+                                    fontFamily:
+                                        '${snapshot.data!['v1_page']}.TTF',
+                                    fontSize: fontsState.arabicFontSize,
+                                  ),
+                                  textDirection: TextDirection.rtl,
+                                  softWrap: true,
+                                ),
+                              );
+                            }
                         }
-                    }
-                  },
-                ),
+                      },
+                    )),
               ],
             ),
             SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                FutureBuilder(
-                  future: _fetchAyahTranslation(),
-                  builder: (context, snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Text('Loading');
-                      default:
-                        if (snapshot.hasError) {
-                          return Text(snapshot.error.toString());
-                        } else {
-                          return SizedBox(
-                            width: MediaQuery.of(context).size.width - 200,
-                            child: Text(
-                              removeMarkupTags(snapshot.data!),
-                              style: TextStyle(
-                                fontSize: 25,
+                Flexible(
+                  flex: 10,
+                  child: FutureBuilder(
+                    future: _fetchAyahTranslation(),
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return Text('Loading');
+                        default:
+                          if (snapshot.hasError) {
+                            return Text(snapshot.error.toString());
+                          } else {
+                            return SizedBox(
+                              child: Text(
+                                removeMarkupTags(snapshot.data!),
+                                style: TextStyle(
+                                  fontSize: fontsState.translationFontSize,
+                                ),
+                                textAlign: TextAlign.left,
+                                softWrap: true,
                               ),
-                              textAlign: TextAlign.left,
-                              softWrap: true,
-                            ),
-                          );
-                        }
-                    }
-                  },
+                            );
+                          }
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
           ],
-          // ),)
         ),
       ),
     );
