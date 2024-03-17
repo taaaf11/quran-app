@@ -1,5 +1,5 @@
 name: quran_com_clone
-description: "A new Flutter project."
+description: "A Quran reading app, in flutter."
 
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
