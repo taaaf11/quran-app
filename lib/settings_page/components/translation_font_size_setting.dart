@@ -4,14 +4,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:quran_com_clone/notifiers.dart';
 
-class AyahFontSizeSetting extends StatefulWidget {
-  const AyahFontSizeSetting({super.key});
+class TranslationFontSizeSetting extends StatefulWidget {
+  const TranslationFontSizeSetting({super.key});
 
   @override
-  State<AyahFontSizeSetting> createState() => _AyahFontSizeSettingState();
+  State<TranslationFontSizeSetting> createState() =>
+      _TranslationFontSizeSettingState();
 }
 
-class _AyahFontSizeSettingState extends State<AyahFontSizeSetting> {
+class _TranslationFontSizeSettingState
+    extends State<TranslationFontSizeSetting> {
   late SharedPreferences prefs;
 
   void initSharedPrefs() async {
@@ -32,7 +34,7 @@ class _AyahFontSizeSettingState extends State<AyahFontSizeSetting> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Font Size of Quran text',
+          'Font size of translation',
           style: TextStyle(fontSize: 17),
         ),
         Row(
@@ -41,25 +43,25 @@ class _AyahFontSizeSettingState extends State<AyahFontSizeSetting> {
               onPressed: () {
                 setState(
                   () {
-                    fontsState.decreaseArabicFontSize();
+                    fontsState.decreaseTranslationFontSize();
                     prefs.setDouble(
-                        'arabicFontSize', fontsState.arabicFontSize);
+                        'translationFontSize', fontsState.translationFontSize);
                   },
                 );
               },
               icon: Icon(Icons.arrow_drop_down),
             ),
             Text(
-              fontsState.arabicFontSize.toString(),
+              fontsState.translationFontSize.toString(),
               style: TextStyle(fontSize: 15),
             ),
             IconButton(
               onPressed: () {
                 setState(
                   () {
-                    fontsState.increaseArabicFontSize();
+                    fontsState.increaseTranslationFontSize();
                     prefs.setDouble(
-                        'arabicFontSize', fontsState.arabicFontSize);
+                        'translationFontSize', fontsState.translationFontSize);
                   },
                 );
               },
