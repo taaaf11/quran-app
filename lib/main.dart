@@ -39,6 +39,20 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late TextEditingController _textEditingController;
+
+  @override
+  void initState() {
+    _textEditingController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,6 +62,28 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         children: <Widget>[
+          SizedBox(
+            width: 200,
+            child: TextField(
+              controller: _textEditingController,
+              onSubmitted: (value) {
+                var surah = int.parse(value.split(':')[0]);
+                var startAyah = int.parse(value.split(':')[1]);
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SurahPage(
+                      surah: surah,
+                      surahName: surahData[surah]![1],
+                      startAyah: startAyah,
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+          SizedBox(height: 50),
           Expanded(
             child: ListView.separated(
               itemBuilder: (_, index) => SurahButton(
@@ -66,8 +102,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   );
                 },
               ),
-              itemCount: 5,
+              itemCount: 114,
               separatorBuilder: (context, index) => const SizedBox(height: 20),
+              addAutomaticKeepAlives: false,
             ),
           ),
         ],
