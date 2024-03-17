@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quran_com_clone/surah_route.dart';
 
 import 'surah_btn.dart';
+import 'surah_data.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,18 +36,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
-    var screenHeight = MediaQuery.of(context).size.height;
+    // var screenWidth = MediaQuery.of(context).size.width;
+    // var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -55,25 +49,26 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          // TextField(), // for entering surah:ayah, and other
-          NumberBox(number: 1),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
+          Expanded(
+            child: ListView.separated(
+              itemBuilder: (_, index) => SurahButton(
+                number: index + 1,
+                name: surahData[index + 1]![1],
+                onPress: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
                       builder: (context) => SurahPage(
-                          surah: 1, surahName: 'al-fatihah', startAyah: 2)));
-            },
-            child: Text('a'),
-          ),
-          SizedBox(
-            width: screenWidth / 2,
-            height: screenHeight / 2,
-            child: ListView.builder(
-              itemBuilder: (_, index) =>
-                  SurahButton(number: index, name: "Al-Fatiha"),
-              itemCount: 1,
+                        surah: index + 1,
+                        surahName: surahData[index + 1]![1],
+                        startAyah: 1,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              itemCount: 5,
+              separatorBuilder: (context, index) => const SizedBox(height: 20),
             ),
           ),
         ],

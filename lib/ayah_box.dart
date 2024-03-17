@@ -68,11 +68,9 @@ class AyahBox extends StatelessWidget {
                   } else {
                     return Text(
                       removeMarkupTags(snapshot.data!),
-                      // snapshot.data!,
                       style: TextStyle(
-                        fontSize: 40,
+                        fontSize: 25,
                       ),
-                      textDirection: TextDirection.rtl,
                     );
                   }
               }
