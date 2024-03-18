@@ -6,6 +6,7 @@ import 'surah_box.dart';
 import 'surah_route.dart';
 import 'utils.dart';
 import 'notifiers.dart';
+import 'bookmarks_page/bookmarks_page.dart';
 import 'settings_page/settings_page.dart';
 
 void main() async {
@@ -16,11 +17,19 @@ void main() async {
 
   double arabicFontSize = prefs.getDouble('arabicFontSize') ?? 25;
   double translationFontSize = prefs.getDouble('translationFontSize') ?? 17;
+  List<String> bookmarks = prefs.getStringList('ayahBookmarks') ?? [];
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) =>
-          FontSizesProvider(arabicFontSize, translationFontSize),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) =>
+              FontSizesProvider(arabicFontSize, translationFontSize),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => BookmarksProvider(bookmarks: bookmarks),
+        ),
+      ],
       child: QuranApp(),
     ),
   );
@@ -84,12 +93,12 @@ class _HomePageState extends State<HomePage> {
                 PopupMenuItem(
                   child: Text('Bookmarks'),
                   onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => SettingsPage(),
-                    //   ),
-                    // );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookmarksPage(),
+                      ),
+                    );
                   },
                 ),
                 PopupMenuItem(

@@ -2,20 +2,26 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import 'package:provider/provider.dart';
+
+import 'ayah_key.dart';
+import 'bookmark_btn.dart';
 import 'notifiers.dart';
 import 'utils.dart';
 
-class AyahBox extends StatelessWidget {
-  final int surah;
-  final int ayah;
+class AyahBox extends StatefulWidget {
+  final AyahKey ayahKey;
 
-  const AyahBox({super.key, required this.surah, required this.ayah});
+  const AyahBox({super.key, required this.ayahKey});
 
+  @override
+  State<AyahBox> createState() => _AyahBoxState();
+}
+
+class _AyahBoxState extends State<AyahBox> {
   Future<Map<String, dynamic>> _fetchAyahText() async {
     var uri = Uri.parse(
-        'https://api.quran.com/api/v4/quran/verses/code_v1/?verse_key=$surah:$ayah');
+        'https://api.quran.com/api/v4/quran/verses/code_v1/?verse_key=${widget.ayahKey.encode}');
     var response = await http.get(uri);
 
     return jsonDecode(response.body)['verses'][0];
@@ -23,7 +29,7 @@ class AyahBox extends StatelessWidget {
 
   Future<String> _fetchAyahTranslation() async {
     var uri = Uri.parse(
-        'https://api.quran.com/api/v4/verses/by_key/$surah:$ayah?translations=95');
+        'https://api.quran.com/api/v4/verses/by_key/${widget.ayahKey.encode}?translations=95');
     var response = await http.get(uri);
 
     return jsonDecode(response.body)['verse']['translations'][0]['text'];
@@ -42,7 +48,17 @@ class AyahBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Flexible(flex: 2, child: Text('$surah:$ayah')),
+                Flexible(
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      Text(widget.ayahKey.encode),
+                      BookmarkButton(
+                        ayahKey: widget.ayahKey,
+                      )
+                    ],
+                  ),
+                ),
                 Flexible(
                   flex: 8,
                   child: FutureBuilder(

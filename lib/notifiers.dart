@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:quran_com_clone/ayah_key.dart';
+
 class FontSizesProvider with ChangeNotifier {
   late double _arabicFontSize;
   late double _translationFontSize;
@@ -33,4 +35,22 @@ class FontSizesProvider with ChangeNotifier {
   double get translationFontSize => _translationFontSize;
 }
 
-class BookmarksProvider with ChangeNotifier {}
+class BookmarksProvider with ChangeNotifier {
+  late List<String> _bookmarks;
+
+  BookmarksProvider({required List<String> bookmarks}) {
+    _bookmarks = bookmarks;
+  }
+
+  void add(AyahKey ayahKey) {
+    _bookmarks.add(ayahKey.encode);
+    notifyListeners();
+  }
+
+  void remove(String ayahKey) {
+    _bookmarks.remove(ayahKey);
+    notifyListeners();
+  }
+
+  List<String> get bookmarks => _bookmarks;
+}
