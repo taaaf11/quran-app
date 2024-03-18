@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'surah_box.dart';
-import 'surah_route.dart';
+import 'surah_page.dart';
 import 'utils.dart';
 import 'notifiers.dart';
 import 'bookmarks_page/bookmarks_page.dart';
