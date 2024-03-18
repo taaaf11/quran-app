@@ -78,12 +78,33 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
         actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SettingsPage()));
+          PopupMenuButton(
+            itemBuilder: (context) {
+              return [
+                PopupMenuItem(
+                  child: Text('Bookmarks'),
+                  onTap: () {
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => SettingsPage(),
+                    //   ),
+                    // );
+                  },
+                ),
+                PopupMenuItem(
+                  child: Text('Settings'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SettingsPage(),
+                      ),
+                    );
+                  },
+                ),
+              ];
             },
-            icon: Icon(Icons.settings),
           )
         ],
       ),
@@ -96,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                 controller: _textEditingController,
                 decoration: InputDecoration(hintText: 'Surah:Ayah'),
                 textAlign: TextAlign.center,
-                onSubmitted: (value) async {
+                onSubmitted: (value) {
                   var surah = int.parse(value.split(':')[0]);
 
                   // check if it's a valid surah

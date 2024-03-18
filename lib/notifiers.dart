@@ -32,3 +32,5 @@ class FontSizesProvider with ChangeNotifier {
   double get arabicFontSize => _arabicFontSize;
   double get translationFontSize => _translationFontSize;
 }
+
+class BookmarksProvider with ChangeNotifier {}
