@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:quran_com_clone/ayah_key.dart';
+import 'package:quran_com_clone/models/ayah_key.dart';
 
 class FontSizesProvider with ChangeNotifier {
   late double _arabicFontSize;

@@ -5,11 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
-import 'ayah_key.dart';
+import '../models/ayah_key.dart';
 import 'bookmark_btn.dart';
-import 'notifiers.dart';
-import 'utils.dart';
-import 'models/ayah_v1.dart';
+import '../notifiers.dart';
+import '../utils.dart';
+import '../models/ayah_v1.dart';
 
 class AyahBox extends StatefulWidget {
   final AyahKey ayahKey;

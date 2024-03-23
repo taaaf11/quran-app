@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'surah_data.dart';
+import '../surah_data.dart';
 import 'dart:math';
 
 class SurahNameBox extends StatelessWidget {

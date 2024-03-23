@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quran_com_clone/ayah_box.dart';
+import 'package:quran_com_clone/components/ayah_box.dart';
 
-import 'package:quran_com_clone/ayah_key.dart';
+import 'package:quran_com_clone/models/ayah_key.dart';
 import 'package:quran_com_clone/notifiers.dart';
 
 class BookmarksPage extends StatefulWidget {
