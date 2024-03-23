@@ -1,10 +1,10 @@
 import 'surah_data.dart';
 
 String removeMarkupTags(String htmlContent) {
-  var markupRemoved =
+  var markupAndNumbersRemoved =
       htmlContent.replaceAll(RegExp(r'<[^>]*>|&[^;]+;|\d+'), '');
 
-  return markupRemoved;
+  return markupAndNumbersRemoved;
 }
 
 bool validateSurah(int surahNumber) => surahNumber >= 1 && surahNumber <= 114;

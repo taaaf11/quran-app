@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quran_com_clone/models/ayah_key.dart';
 
-import '../surah_data.dart';
-import '../components/ayah_box.dart';
+import '../../surah_data.dart';
+import '../../components/ayah_box.dart';
 
 class SurahPage extends StatelessWidget {
   final int surahNumber;

@@ -3,11 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/surah_box.dart';
-import 'surah_page/surah_page.dart';
+import 'pages/surah_page/surah_page.dart';
 import 'utils.dart';
 import 'notifiers.dart';
-import 'bookmarks_page/bookmarks_page.dart';
-import 'settings_page/settings_page.dart';
+import 'pages/bookmarks_page/bookmarks_page.dart';
+import 'pages/settings_page/settings_page.dart';
 
 void main() async {
   SharedPreferences.setPrefix('taaaf11_quran_com_clone');
