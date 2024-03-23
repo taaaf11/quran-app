@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 
 import 'ayah_key.dart';
 import 'bookmark_btn.dart';
 import 'notifiers.dart';
 import 'utils.dart';
+import 'models/ayah_v1.dart';
 
 class AyahBox extends StatefulWidget {
   final AyahKey ayahKey;
@@ -19,12 +21,18 @@ class AyahBox extends StatefulWidget {
 }
 
 class _AyahBoxState extends State<AyahBox> {
-  Future<Map<String, dynamic>> _fetchAyahText() async {
+  Future<AyahV1> _fetchAyahTextV1() async {
     var uri = Uri.parse(
         'https://api.quran.com/api/v4/quran/verses/code_v1/?verse_key=${widget.ayahKey.encode}');
     var response = await http.get(uri);
+    var responseJson = jsonDecode(response.body);
 
-    return jsonDecode(response.body)['verses'][0];
+    var verse = responseJson['verses'][0];
+
+    String ayahCodeV1 = verse['code_v1'];
+    int pageNumber = verse['v1_page'];
+
+    return AyahV1(pageNumber: pageNumber, code: ayahCodeV1);
   }
 
   Future<String> _fetchAyahTranslation() async {
@@ -62,21 +70,33 @@ class _AyahBoxState extends State<AyahBox> {
                 Flexible(
                   flex: 8,
                   child: FutureBuilder(
-                    future: _fetchAyahText(),
+                    future: _fetchAyahTextV1(),
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return Text('Loading');
+                          return Shimmer.fromColors(
+                            baseColor: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.3),
+                            highlightColor: Colors.grey.shade500,
+                            child: Container(
+                              color:
+                                  Theme.of(context).colorScheme.inverseSurface,
+                              width: 320,
+                              height: 20,
+                            ),
+                          );
                         default:
                           if (snapshot.hasError) {
                             return Text(snapshot.error.toString());
                           } else {
                             return SizedBox(
                               child: Text(
-                                snapshot.data!['code_v1'],
+                                snapshot.data!.code,
                                 style: TextStyle(
                                   fontFamily:
-                                      '${snapshot.data!['v1_page']}.TTF',
+                                      '${snapshot.data!.pageNumber}.TTF',
                                   fontSize: fontsState.arabicFontSize,
                                 ),
                                 textDirection: TextDirection.rtl,
@@ -101,7 +121,19 @@ class _AyahBoxState extends State<AyahBox> {
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return Text('Loading');
+                          return Shimmer.fromColors(
+                            baseColor: Theme.of(context)
+                                .colorScheme
+                                .onSurface
+                                .withOpacity(0.3),
+                            highlightColor: Colors.grey.shade500,
+                            child: Container(
+                              color:
+                                  Theme.of(context).colorScheme.inverseSurface,
+                              width: 320,
+                              height: 20,
+                            ),
+                          );
                         default:
                           if (snapshot.hasError) {
                             return Text(snapshot.error.toString());
