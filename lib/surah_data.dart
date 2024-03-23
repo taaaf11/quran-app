@@ -1,4 +1,4 @@
-Map<int, List> surahData = {
+const Map<int, List> surahData = {
   1: [7, 'Al-Fatihah', 'The Opener'],
   2: [286, 'Al-Baqarah', 'The Cow'],
   3: [200, 'Ali \'Imran', 'Family of Imran'],
