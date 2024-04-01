@@ -105,9 +105,11 @@ class _AyahBoxState extends State<AyahBox> {
                                     ),
                                     onPress: () async {
                                       final player = AudioPlayer();
-                                      await player.play(UrlSource(
-                                          'https://audio.qurancdn.com/'
-                                          '${word['audio_url']}'));
+                                      if (word['audio_url'] != null) {
+                                        await player.play(UrlSource(
+                                            'https://audio.qurancdn.com/'
+                                            '${word['audio_url']}'));
+                                      }
                                     },
                                   )
                               ],

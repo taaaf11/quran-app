@@ -11,21 +11,23 @@ class SurahNameBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      // mainAxisAlignment: MainAxisAlignment.start,
       children: [
         NumberBox(number: surahNumber),
         SizedBox(width: 30),
-        SizedBox(
-          width: 230,
+        Center(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                surahData[surahNumber]![1], // surah name
-                style: TextStyle(fontSize: 20),
+                surahData[surahNumber]?[1], // surah name
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               Text(
-                surahData[surahNumber]![
-                    2], // surah name translated into English
+                surahData[surahNumber]
+                    ?[2], // surah name translated into English
                 style: TextStyle(color: Colors.grey[350]),
+                textAlign: TextAlign.left,
               )
             ],
           ),

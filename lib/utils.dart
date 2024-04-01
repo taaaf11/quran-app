@@ -30,3 +30,17 @@ String removeSpacesFromString(String string) {
 
   return newString;
 }
+
+int getCrossAxisCount(double screenWidth) {
+  switch (screenWidth) {
+    case < 320:
+    case >= 320 && <= 767:
+      return 1;
+    case >= 768 && <= 991:
+      return 2;
+    case >= 992:
+      return 3;
+    default:
+      return 3;
+  }
+}

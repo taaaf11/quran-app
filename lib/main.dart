@@ -153,8 +153,15 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 50),
             Expanded(
               child: SizedBox(
-                width: 348,
-                child: ListView.separated(
+                width: MediaQuery.of(context).size.width - 80,
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount:
+                        getCrossAxisCount(MediaQuery.sizeOf(context).width),
+                    mainAxisExtent: 87,
+                    mainAxisSpacing: 30,
+                    crossAxisSpacing: 50,
+                  ),
                   itemBuilder: (_, index) => Container(
                     padding: EdgeInsets.all(18),
                     decoration: BoxDecoration(
@@ -180,9 +187,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                   itemCount: 114,
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(height: 20),
-                  addAutomaticKeepAlives: false,
                 ),
               ),
             ),
