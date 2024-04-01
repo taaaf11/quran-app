@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -10,6 +11,7 @@ import 'bookmark_btn.dart';
 import '../notifiers.dart';
 import '../utils.dart';
 import '../models/ayah_v1.dart';
+import 'clickable_text.dart';
 
 class AyahBox extends StatefulWidget {
   final AyahKey ayahKey;
@@ -23,16 +25,16 @@ class AyahBox extends StatefulWidget {
 class _AyahBoxState extends State<AyahBox> {
   Future<AyahV1> _fetchAyahTextV1() async {
     var uri = Uri.parse(
-        'https://api.quran.com/api/v4/quran/verses/code_v1/?verse_key=${widget.ayahKey.encode}');
+        'https://api.quran.com/api/v4/verses/by_key/${widget.ayahKey.encode}?words=true');
     var response = await http.get(uri);
-    var responseJson = jsonDecode(response.body);
 
-    var verse = responseJson['verses'][0];
+    var responseJson = json.decode(response.body);
 
-    String ayahCodeV1 = verse['code_v1'];
-    int pageNumber = verse['v1_page'];
+    List verse = responseJson['verse']['words'];
+    List<Map<String, dynamic>> words =
+        verse.map((item) => item as Map<String, dynamic>).toList();
 
-    return AyahV1(pageNumber: pageNumber, code: ayahCodeV1);
+    return AyahV1(words: words);
   }
 
   Future<String> _fetchAyahTranslation() async {
@@ -91,17 +93,24 @@ class _AyahBoxState extends State<AyahBox> {
                           if (snapshot.hasError) {
                             return Text(snapshot.error.toString());
                           } else {
-                            return SizedBox(
-                              child: Text(
-                                snapshot.data!.code,
-                                style: TextStyle(
-                                  fontFamily:
-                                      '${snapshot.data!.pageNumber}.TTF',
-                                  fontSize: fontsState.arabicFontSize,
-                                ),
-                                textDirection: TextDirection.rtl,
-                                softWrap: true,
-                              ),
+                            return Wrap(
+                              textDirection: TextDirection.rtl,
+                              children: [
+                                for (final word in snapshot.data!.words)
+                                  ClickableText(
+                                    text: word['code_v1'],
+                                    textStyle: TextStyle(
+                                      fontFamily: '${word['page_number']}.TTF',
+                                      fontSize: fontsState.arabicFontSize,
+                                    ),
+                                    onPress: () async {
+                                      final player = AudioPlayer();
+                                      await player.play(UrlSource(
+                                          'https://audio.qurancdn.com/'
+                                          '${word['audio_url']}'));
+                                    },
+                                  )
+                              ],
                             );
                           }
                       }

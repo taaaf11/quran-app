@@ -61,8 +61,6 @@ class NumberBox extends StatelessWidget {
                 angle: pi / 4,
                 child: Text(
                   number.toString(),
-                  // textAlign: TextAlign.center,
-                  // softWrap: true,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onPrimary,
                     fontWeight: FontWeight.bold,

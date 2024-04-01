@@ -13,7 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-
+  audioplayers: ^5.0.0
   http: ^1.2.1
   provider: ^6.1.2
   shared_preferences: ^2.2.2

@@ -10,10 +10,16 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text('Settings')),
-        body: Column(children: [
-          AyahFontSizeSetting(),
-          SizedBox(height: 30),
-          TranslationFontSizeSetting()
-        ]));
+        body: Center(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width /
+                2, // quarter the screen width
+            child: Column(children: [
+              AyahFontSizeSetting(),
+              SizedBox(height: 30),
+              TranslationFontSizeSetting()
+            ]),
+          ),
+        ));
   }
 }
