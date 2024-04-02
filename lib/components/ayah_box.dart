@@ -100,7 +100,7 @@ class _AyahBoxState extends State<AyahBox> {
                                   ClickableText(
                                     text: word['code_v1'],
                                     textStyle: TextStyle(
-                                      fontFamily: '${word['page_number']}.TTF',
+                                      fontFamily: '${word['page_number']}.ttf',
                                       fontSize: fontsState.arabicFontSize,
                                     ),
                                     onPress: () async {
