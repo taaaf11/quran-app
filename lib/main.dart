@@ -29,6 +29,7 @@ void main() async {
         ChangeNotifierProvider(
           create: (context) => BookmarksProvider(bookmarks: bookmarks),
         ),
+        ChangeNotifierProvider(create: (context) => FontsLoaded())
       ],
       child: QuranApp(),
     ),

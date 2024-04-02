@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+// import 'package:network_font/network_font.dart';
 
 import '../models/ayah_key.dart';
 import 'bookmark_btn.dart';
@@ -23,7 +25,24 @@ class AyahBox extends StatefulWidget {
 }
 
 class _AyahBoxState extends State<AyahBox> {
-  Future<AyahV1> _fetchAyahTextV1() async {
+  late final _fontsLoaded;
+
+  @override
+  void initState() {
+    super.initState();
+    _fontsLoaded = Provider.of<FontsLoaded>(context, listen: false);
+  }
+
+  Future<void> _getFont(int pageNumber) async {
+    if (!_fontsLoaded.isFontLoaded(pageNumber)) {
+      var fontLoader = FontLoader(pageNumber.toString());
+      fontLoader.addFont(fetchFontBytes(pageNumber));
+      await fontLoader.load();
+      _fontsLoaded.add(pageNumber);
+    }
+  }
+
+  Future<AyahV1> _fetchAyahTextV1(BuildContext context) async {
     var uri = Uri.parse(
         'https://api.quran.com/api/v4/verses/by_key/${widget.ayahKey.encode}?words=true');
     var response = await http.get(uri);
@@ -33,6 +52,12 @@ class _AyahBoxState extends State<AyahBox> {
     List verse = responseJson['verse']['words'];
     List<Map<String, dynamic>> words =
         verse.map((item) => item as Map<String, dynamic>).toList();
+
+    // get font for the first and last word of the ayah
+    // so that full ayah fonts are fetched, in case ayah
+    // spans two pages
+    await _getFont(words.first['page_number']);
+    await _getFont(words.last['page_number']);
 
     return AyahV1(words: words);
   }
@@ -48,6 +73,7 @@ class _AyahBoxState extends State<AyahBox> {
   @override
   Widget build(BuildContext context) {
     var fontsState = Provider.of<FontSizesProvider>(context);
+    // var fontsLoaded = Provider.of<FontsLoaded>(context);
 
     return Card(
       surfaceTintColor: Theme.of(context).colorScheme.onSurface,
@@ -72,7 +98,7 @@ class _AyahBoxState extends State<AyahBox> {
                 Flexible(
                   flex: 8,
                   child: FutureBuilder(
-                    future: _fetchAyahTextV1(),
+                    future: _fetchAyahTextV1(context),
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
@@ -100,7 +126,7 @@ class _AyahBoxState extends State<AyahBox> {
                                   ClickableText(
                                     text: word['code_v1'],
                                     textStyle: TextStyle(
-                                      fontFamily: '${word['page_number']}.ttf',
+                                      fontFamily: '${word['page_number']}',
                                       fontSize: fontsState.arabicFontSize,
                                     ),
                                     onPress: () async {

@@ -54,3 +54,14 @@ class BookmarksProvider with ChangeNotifier {
 
   List<String> get bookmarks => _bookmarks;
 }
+
+class FontsLoaded with ChangeNotifier {
+  final List<int> _fontsLoaded = [];
+
+  void add(int pageNumber) {
+    _fontsLoaded.add(pageNumber);
+    _fontsLoaded.toSet().toList();
+  }
+
+  bool isFontLoaded(int pageNumber) => _fontsLoaded.contains(pageNumber);
+}
